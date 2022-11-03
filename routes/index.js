@@ -18,7 +18,7 @@ router.get("/", (req, res) => {
   res.redirect("/books");
 });
 
-// /* GET full list of books */
+/* GET full list of books */
 router.get(
   "/books",
   asyncHandler(async (req, res) => {
@@ -57,10 +57,18 @@ router.post(
   })
 );
 
-// /*GET shows book detail form */
-// router.get("/books/:id", function (req, res, next) {
-//   asyncHandler(async (req, res) => {});
-// });
+/*GET shows book detail form */
+router.get(
+  "/books/:id",
+  asyncHandler(async (req, res) => {
+    const book = await Book.findByPk(req.params.id);
+    if (book) {
+      res.render("update-book", { book });
+    } else {
+      res.sendStatus(404);
+    }
+  })
+);
 
 // /*POST updates book info in the database */
 // router.get("/books/:id", function (req, res, next) {
