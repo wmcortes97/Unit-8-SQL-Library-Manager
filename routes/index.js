@@ -13,6 +13,21 @@ function asyncHandler(cb) {
   };
 }
 
+// /* pagination buttons*/
+// router.get(
+//   "/books",
+//   asyncHandler(async (req, res) => {
+//     try {
+//       const page = parseInt(req.query.page) -1 || 0;
+//     const limit = parseInt(req.query.limit) || 5;
+//     const search = req.query.search || "";
+//     } catch (error) {
+
+//     }
+
+//   })
+// );
+
 /* GET home page which redirects to /books */
 router.get("/", (req, res) => {
   res.redirect("/books");
@@ -46,7 +61,7 @@ router.post(
     } catch (error) {
       if (error.name === "SequelizeValidationError") {
         book = await Book.build(req.body);
-        res.render("form-error");
+        res.render("form-error", { book });
       } else {
         throw error;
       }
