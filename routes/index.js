@@ -31,7 +31,7 @@ router.get(
 router.get(
   "/books/new",
   asyncHandler(async (req, res) => {
-    res.render("new-book", { book: {} });
+    res.render("new-book");
   })
 );
 
