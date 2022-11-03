@@ -39,23 +39,23 @@ router.get(
 router.post(
   "/books/new",
   asyncHandler(async (req, res) => {
-    // const book = await Book.create(req.body);
-    console.log(req.body);
+    const book = await Book.create(req.body);
+    res / redirect("/books/" + book.id);
   })
 );
 
-// /*GET shows book detail form */
-// router.get(
-//   "/books/:id",
-//   asyncHandler(async (req, res) => {
-//     const book = await Book.findByPk(req.params.id);
-//     if (book) {
-//       res.render("update-book", { book });
-//     } else {
-//       res.sendStatus(404);
-//     }
-//   })
-// );
+/*GET shows book detail form */
+router.get(
+  "/books/:id",
+  asyncHandler(async (req, res) => {
+    const book = await Book.findByPk(req.params.id);
+    if (book) {
+      res.render("update-book", { book });
+    } else {
+      res.sendStatus(404);
+    }
+  })
+);
 
 // /*POST updates book info in the database */
 // router.post(
