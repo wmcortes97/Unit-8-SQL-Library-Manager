@@ -40,7 +40,7 @@ router.post(
   "/books/new",
   asyncHandler(async (req, res) => {
     const book = await Book.create(req.body);
-    res / redirect("/books/" + book.id);
+    res.redirect("/");
   })
 );
 
