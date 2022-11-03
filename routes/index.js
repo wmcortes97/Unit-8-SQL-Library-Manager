@@ -13,34 +13,49 @@ function asyncHandler(cb) {
   };
 }
 
+/* GET home page which redirects to /books */
 router.get("/", (req, res) => {
   res.redirect("/books");
 });
 
-/* GET home page which redirects to /books */
+// /* GET full list of books */
 router.get(
   "/books",
   asyncHandler(async (req, res) => {
     const books = await Book.findAll();
-    // return res.json(books);
     res.render("index", { books });
   })
 );
 
-// /* GET full list of books */
-// router.get("/books", function (req, res, next) {
-//   asyncHandler(async (req, res) => {});
-// });
+/*GET create new book form */
+router.get(
+  "/books/new",
+  asyncHandler(async (req, res) => {
+    res.render("new-book");
+  })
+);
 
-// /*GET create new book form */
-// router.get("/books/new", function (req, res, next) {
-//   asyncHandler(async (req, res) => {});
-// });
-
-// /*POST posts new book to the database */
-// router.get("/books/new", function (req, res, next) {
-//   asyncHandler(async (req, res) => {});
-// });
+/*POST posts new book to the database */
+router.post(
+  "/books/new",
+  asyncHandler(async (req, res) => {
+    let book;
+    try {
+      book = await Book.create(req.body);
+      res.redirect("/books/" + book.id);
+    } catch (error) {
+      if (error.name === "SequelizeValidationError") {
+        book = await Article.build(req.body);
+        res.render("form-error", {
+          book,
+          errors: error.errors,
+        });
+      } else {
+        throw error;
+      }
+    }
+  })
+);
 
 // /*GET shows book detail form */
 // router.get("/books/:id", function (req, res, next) {
