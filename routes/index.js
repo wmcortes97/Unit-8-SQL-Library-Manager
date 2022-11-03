@@ -72,12 +72,14 @@ router.post(
 /*GET shows book detail form */
 router.get(
   "/books/:id",
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     const book = await Book.findByPk(req.params.id);
     if (book) {
       res.render("update-book", { book });
     } else {
-      res.sendStatus(404);
+      const error = new Error("Book not found in database");
+      error.status = 404;
+      next(error);
     }
   })
 );
