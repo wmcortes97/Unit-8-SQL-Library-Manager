@@ -48,6 +48,7 @@ router.post(
         book = await Book.build(req.body);
         res.render("form-error");
       } else {
+        throw error;
       }
     }
   })
@@ -83,7 +84,7 @@ router.post(
       if (error.name === "SequelizeValidationError") {
         book = await Book.build(req.body);
         book.id = req.params.id;
-        res.render("form-error");
+        res.render("form-error", { book });
       } else {
         throw error;
       }
