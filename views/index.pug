@@ -1,9 +1,6 @@
 extends layout
 
 block content
-  form.search(action='/books/search' method='GET')
-    input.search-bar(type='text' placeholder='Search Books...' name='bookName')
-    button Search
   h1 Books
   p
     a.button(href='/books/new') Create New Book
